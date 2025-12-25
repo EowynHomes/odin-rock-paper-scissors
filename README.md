@@ -1,3 +1,6 @@
 this was an assignment from theodinproject.com. to make a rock paper scissors game using the console (and i guess the prompt() function.) I ended up using a couple of boolean conditionals. One `if` statement handles cases of ties. The `else if` statement handles cases where the player could win. Finally the `else` statement assumes if no tie and the player didn't win then the computer will win. Funny this also lets the computer win if the player doesn't enter a valid choice. I used a `while` loop to continue running the game until the player or the computer reaches a score of five.
 
 it's a little inelegant. I'm not sure if there's a better way to check for the winner, or if there's a better way to rerun the game until a score of 5 is reached. I'm excited to look at some of the other students' solutions.
+
+
+Update - after looking at some of the community code and reading the instructions again, I realized I misread the instructions. I should have made the amount of rounds played be 5, instead I made the players play until a score of 5 was reached. Additionally, I should have used used `return` in my functions instead of having the functions assign the variables directly. 

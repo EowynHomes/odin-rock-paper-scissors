@@ -1,13 +1,31 @@
+
+
 let computerChoice;
 let rawRandomChoice;
 let humanChoice;
+let humanScore = 0;
+let computerScore = 0;
 
+let rockBtn = document.querySelector("#rock");
+let paperBtn = document.querySelector("#paper");
+let scissorsBtn = document.querySelector("#scissors");
+let div = document.querySelector("#buttons");
+let results = document.querySelector("#results");
 
+div.addEventListener("click", buttonClicked);
 
+results.textContent = `Human Score = ${humanScore}, Computer Score = ${computerScore}`;
+let messageOne = document.createElement("p");
+results.appendChild(messageOne);
+let messageTwo = document.createElement("p");
+results.appendChild(messageTwo);
+let messageThree = document.createElement("p");
+results.appendChild(messageThree);
 
-//GET the computer's choice (Rock, paper, or scissors) 
+let choiceBtns = document.querySelectorAll(".choice");
+
 function getComputerChoice(){
-    //randomly select and return "rock", "paper", or "scissors".
+
     rawRandomChoice = Math.random();
     if (rawRandomChoice <= (1/3)) {
         computerChoice = "rock";
@@ -16,72 +34,37 @@ function getComputerChoice(){
     } else {
         computerChoice = "scissors";
     }
-    //test what the function returns using console.log()
+
     console.log(`Computer choice is ${computerChoice}.`);
+    return computerChoice;
 }
-    
-
-//GET the user's choice (rock, paper, or scissors)
-    function getHumanChoice(){
-        //PROMPT the user
-        humanChoice = prompt("type your choice: rock, paper or scissors");
-        //(just assume the user *will* enter a valid choice)
-        //test what the function returns using console.log()
-        console.log(`Human choice is ${humanChoice}.`);
-    }
-    
-
-
-//create the logic to play a single round. (case insensitive (convert player input toLowerCase should work here))
-
-
-//Play the game for 5 rounds
-
-let humanScore = 0;
-let computerScore = 0;
 
 function playRound(humanChoice, computerChoice){
     
     if (humanChoice.toLowerCase() === computerChoice) {
-        console.log(`${humanChoice} and ${computerChoice} are the same. It's a tie!`)
-        console.log(`Score is Human: ${humanScore} to Computer: ${computerScore}.`)
+        messageOne.textContent=`${humanChoice} and ${computerChoice} are the same. It's a tie!`;
+        messageTwo.textContent=`Score is Human: ${humanScore} to Computer: ${computerScore}.`;
         return;
     }
     else if ((humanChoice.toLowerCase() === "rock" && computerChoice === "scissors")
         ||(humanChoice.toLowerCase() === "paper" && computerChoice === "rock")
         ||(humanChoice.toLowerCase() === "scissors" && computerChoice === "paper")){
             humanScore ++;
-            console.log(`You win! ${humanChoice} beats ${computerChoice}`);
-            console.log(`Score is Human: ${humanScore} to Computer: ${computerScore}.`)
+            messageOne.textContent=`You win! ${humanChoice} beats ${computerChoice}`;
+            messageTwo.textContent=`Score is Human: ${humanScore} to Computer: ${computerScore}.`;
     } else {
         computerScore ++;
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}`);
-        console.log(`Score is Human: ${humanScore} to Computer: ${computerScore}.`)
+        messageOne.textContent=`You lose! ${computerChoice} beats ${humanChoice}`;
+        messageTwo.textContent= `Score is Human: ${humanScore} to Computer: ${computerScore}.`;
     }
 
     if ((humanScore >= 5)|| (computerScore>=5)) {
-        console.log(`I've had enough! Good game!`)
+        messageOne.textContent = `I've had enough!`;
+        messageTwo.textContent = `Good Game`;
     }
-    //output a string value to console.log representing the round winner.. such as "You lose! Paper beats Rock"
-    //increase the humanScore or computerScore based on the winner
 }
-// while((humanScore <5) && (computerScore <5)){
-//     getComputerChoice();
-//     getHumanChoice();
-//     playRound(humanChoice, computerChoice);        
-// }
 
-
-
-
-// playGame();
- 
-let rockBtn = document.querySelector("#rock");
-let paperBtn = document.querySelector("#paper");
-let scissorsBtn = document.querySelector("#scissors");
-let div = document.querySelector("div");
-
-div.addEventListener("click", (e) => {
+function buttonClicked(e) {
     let choice ="";
     if (e.target == rockBtn) {
         choice = "rock";
@@ -93,4 +76,25 @@ div.addEventListener("click", (e) => {
 
     let comChoice = getComputerChoice();
     playRound(choice, comChoice);
-});
+
+    results.textContent = `Human Score = ${humanScore}, Computer Score = ${computerScore}`;
+    results.appendChild(messageOne);
+    results.appendChild(messageTwo);
+    results.appendChild(messageThree);
+
+    if (humanScore>=5||computerScore>=5){
+        
+        humanScore > computerScore ?
+        messageOne.textContent += "You win!!!" :
+        messageThree.textContent += "Computer wins";
+
+        div.removeEventListener("click", buttonClicked);
+        for (btn of choiceBtns){
+            btn.classList.add("unavailable");
+        }
+        
+    }
+
+
+}
+
